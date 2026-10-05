@@ -1,0 +1,6 @@
+# Rendered output is a product, not source
+*.mp4
+*.spec.json
+*-frames/
+__pycache__/
+*.py[cod]

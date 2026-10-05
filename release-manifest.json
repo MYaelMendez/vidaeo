@@ -1,0 +1,56 @@
+{
+  "manifest_version": 1,
+  "release_date_utc": "2026-10-05",
+  "package": {
+    "id": "store.vidæo",
+    "name": "vidæo",
+    "version": "1.0.0",
+    "license": "MIT",
+    "boundary": "OPENSOURCEWARE_BOUNDARY.md",
+    "pairs_with": "store.supervisionvidæo"
+  },
+  "artifact": {
+    "path": "vidæo.py",
+    "size_bytes": 11378,
+    "sha256": "0f156b1833c675b9ce783cfe8920822ff11c2bcad8f66ced3da861fcf33515ef",
+    "lines": 273,
+    "single_file": true,
+    "line_endings": "LF",
+    "hash_note": "sha256 is over the SHIPPED (LF) artifact. Verify the download, not a Windows working copy."
+  },
+  "runtime": {
+    "python": ">=3.10",
+    "hard_dependencies": [],
+    "optional_dependencies": [],
+    "external_tools": ["ffmpeg", "node", "a GPU python (for the CuPy producer)"],
+    "network": false
+  },
+  "cycle": {
+    "phases": ["SPEC", "RTL", "SIM", "SYNTH", "P&R", "GDS", "FAB", "TEST"],
+    "advances_on": "gate pass",
+    "never_advances_on": "elapsed time",
+    "gate_test": "SupervisorVideo PASS + SHA-256 receipt"
+  },
+  "commands": [
+    "status", "cycle", "verify", "render", "generate", "corpus"
+  ],
+  "env": {
+    "MP4_OUTPUT_DIR": "output directory for rendered assets (default: C:\\æ\\out\\mp4)"
+  },
+  "verification": {
+    "compile": "pass",
+    "cycle_end_to_end": "pass",
+    "invalid_spec_blocks": "pass",
+    "no_network": "pass"
+  },
+  "consumers": [
+    "plugins/video_gen/vidaeo (Hermes video_gen backend)",
+    "plugins/mp4-factory (MP4 FORGE desktop pane)",
+    "supervisionvidæo (the produce-and-verify contract)"
+  ],
+  "custody": {
+    "secrets_local_only": true,
+    "crosses_network": "never",
+    "renders": "stay on the operator's device"
+  }
+}
