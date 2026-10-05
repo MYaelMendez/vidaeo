@@ -22,6 +22,7 @@ Usage:
 from __future__ import annotations
 import json
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -33,6 +34,21 @@ VISION = HOME / "vision-supervision"
 FACTORY = HOME / "mp4-factory"
 GPU_PY = r"C:\gpu\Scripts\python.exe"
 FFPROBE = r"C:\Users\yaelm\AppData\Local\hermes\tools\ffmpeg-7.1-nvenc\bin\ffprobe.exe"
+
+# The bundled Node runtime. render.mjs has ZERO npm dependencies — it speaks CDP
+# over Node's native fetch + WebSocket — so this executable IS the render runtime.
+# Resolve it explicitly: relying on a bare "node" on PATH breaks if PATH changes,
+# and there is no fallback node on this box.
+NODE = r"C:\Users\yaelm\AppData\Local\hermes\tools\node-26.7.0-win32-x64\node.exe"
+
+
+def _node() -> str:
+    """The bundled node if present, else a PATH lookup, else bare 'node' (which
+    will fail loudly at call time rather than silently pick the wrong runtime)."""
+    if Path(NODE).exists():
+        return NODE
+    found = shutil.which("node") or shutil.which("node.exe")
+    return found or "node"
 
 sys.path.insert(0, str(VISION))
 sys.path.insert(0, str(THREEJS))
@@ -134,7 +150,7 @@ def cmd_verify(mp4: str):
 def cmd_render(url: str, out: str, frames: int = 450):
     _head(f"VIDÆO — render {url}")
     t0 = time.time()
-    r = subprocess.run(["node", "render.mjs", f"--url={url}", f"--out={out}",
+    r = subprocess.run([_node(), "render.mjs", f"--url={url}", f"--out={out}",
                         f"--frames={frames}", "--fps=30", "--w=720", "--h=1280",
                         "--encoder=nvenc"],
                        cwd=str(THREEJS), capture_output=True, text=True, timeout=900)

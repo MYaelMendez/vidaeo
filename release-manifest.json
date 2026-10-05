@@ -11,9 +11,9 @@
   },
   "artifact": {
     "path": "vidæo.py",
-    "size_bytes": 11378,
-    "sha256": "0f156b1833c675b9ce783cfe8920822ff11c2bcad8f66ced3da861fcf33515ef",
-    "lines": 273,
+    "size_bytes": 12093,
+    "sha256": "b1db463d73cb9791944950eb9dabc346f136f04836bcae04d5b2241a1d1e9dc1",
+    "lines": 289,
     "single_file": true,
     "line_endings": "LF",
     "hash_note": "sha256 is over the SHIPPED (LF) artifact. Verify the download, not a Windows working copy."
@@ -23,6 +23,11 @@
     "hard_dependencies": [],
     "optional_dependencies": [],
     "external_tools": ["ffmpeg", "node", "a GPU python (for the CuPy producer)"],
+    "node_runtime": {
+      "path": "C:/Users/yaelm/AppData/Local/hermes/tools/node-26.7.0-win32-x64/node.exe",
+      "why": "render.mjs has ZERO npm dependencies — it speaks CDP over Node's native fetch + WebSocket. This exe IS the render runtime; callers resolve it explicitly, never a bare 'node'.",
+      "native_globals": ["fetch", "WebSocket"]
+    },
     "network": false
   },
   "cycle": {
